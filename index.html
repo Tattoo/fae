@@ -112,70 +112,70 @@
         <input type="text" class="consequence" style="top: calc(var(--bottom-section) + var(--aspect-spacing) * 2)" />
     </body>
     <script>
-    function loadCharacter(){
-        var data = {
-            "a": {
-                  "name": "Julius Mallas"
-                , "description": ""
-                , "refresh": "3"
-                , "aspect": ["Geeninuorennettu, eläköityny johdon konsultti", "Pitkällä uralla on pitkät jäljet", "Rhodium-tason asiakkuus Arkadia Varallisuudessa", "", ""]
-                , "approach": ["+3", "+1", "+1", "+2", "+2", "0"]
-                , "stunts": "Koska olen ymmärtänyt verkostoitumisen arvon,\nvoin kerran pelikerran aikana löytää hyödyllisen vanhan tutun\n\n(Koska refleksejäni on keinohermostollisesti paranneltu,\nvoin kerran pelisekerran aikana toimia taistelussa ensimmäisenä)"
-                , "stress": ["", "", ""]
-                , "consequence": ["", "", ""]
+        function loadCharacter(){
+            var data = {
+                "a": {
+                      "name": "Julius Mallas"
+                    , "description": ""
+                    , "refresh": "3"
+                    , "aspect": ["Geeninuorennettu, eläköityny johdon konsultti", "Pitkällä uralla on pitkät jäljet", "Rhodium-tason asiakkuus Arkadia Varallisuudessa", "", ""]
+                    , "approach": ["+3", "+1", "+1", "+2", "+2", "0"]
+                    , "stunts": "Koska olen ymmärtänyt verkostoitumisen arvon,\nvoin kerran pelikerran aikana löytää hyödyllisen vanhan tutun\n\n(Koska refleksejäni on keinohermostollisesti paranneltu,\nvoin kerran pelisekerran aikana toimia taistelussa ensimmäisenä)"
+                    , "stress": ["", "", ""]
+                    , "consequence": ["", "", ""]
+                }
+                , "e": {
+                      "name": "Anfion Saradatos"
+                    , "description": ""
+                    , "refresh": "3"
+                    , "aspect": ["Altruistinen telepaatti-pilotti", "Bourasin turvallisuuspalvelun etsintäkuuluttama", "Rahtialus Voleta", "", ""]
+                    , "approach": ["+2", "+1", "+1", "0", "+2", "+3"]
+                    , "stunts": "Koska alukseni on varustettu häivetekniikalla,\nSaan +2 kun ovelasti puolustan\nlentäessäni alustani"
+                    , "stress": ["", "", ""]
+                    , "consequence": ["", "", ""]
+                }
+                , "j": {
+                      "name": "Loxias Loukas"
+                    , "description": "https://tattoo.github.io/fae/fae.pdf\nhttps://tattoo.github.io/fae/fate.pdf"
+                    , "refresh": "3"
+                    , "aspect": ["Kirkasotsainen tutkiva journalisti", "Työntää nokkansa vääriin paikkoihin", "Herättää välitöntä luottamusta", "", ""]
+                    , "approach": ["+1", "+3", "+1", "0", "+2", "+2"]
+                    , "stunts": "Koska olen taitava puhuja\nSaan +2 kun ovelasti ylitän haasteen\nyrittäessäni saada itselleni pääsyä paikkoihin, johon minulla ei olisi oikeutta"
+                    , "stress": ["", "", ""]
+                    , "consequence": ["", "", ""]
+                }
             }
-            , "e": {
-                  "name": "Anfion Saradatos"
-                , "description": ""
-                , "refresh": "3"
-                , "aspect": ["Altruistinen telepaatti-pilotti", "Bourasin turvallisuuspalvelun etsintäkuuluttama", "Rahtialus Voleta", "", ""]
-                , "approach": ["+2", "+1", "+1", "0", "+2", "+3"]
-                , "stunts": "Koska alukseni on varustettu häivetekniikalla,\nSaan +2 kun ovelasti puolustan\nlentäessäni alustani"
-                , "stress": ["", "", ""]
-                , "consequence": ["", "", ""]
+            , character = data[document.querySelector("#switcher").value];
+            if (character === undefined){
+                alert("Could not load character")
             }
-            , "j": {
-                  "name": "Loxias Loukas"
-                , "description": "https://tattoo.github.io/fae/fae.pdf\nhttps://tattoo.github.io/fae/fate.pdf"
-                , "refresh": "3"
-                , "aspect": ["Kirkasotsainen tutkiva journalisti", "Työntää nokkansa vääriin paikkoihin", "Herättää välitöntä luottamusta", "", ""]
-                , "approach": ["+1", "+3", "+1", "0", "+2", "+2"]
-                , "stunts": "Koska olen taitava puhuja\nSaan +2 kun ovelasti ylitän haasteen\nyrittäessäni saada itselleni pääsyä paikkoihin, johon minulla ei olisi oikeutta"
-                , "stress": ["", "", ""]
-                , "consequence": ["", "", ""]
-            }
-        }
-        , character = data[document.querySelector("#switcher").value];
-        if (character === undefined){
-            alert("Could not load character")
+
+            Object.entries(character).forEach(function( [field, value] ){
+                if (typeof value === "string"){
+                    document.querySelector( "#" + field ).value = value;
+                    return;
+                }
+                document.querySelectorAll( "." + field ).forEach(function( el, i ){
+                    el.value = value[i];
+                });
+            });
         }
 
-        Object.entries(character).forEach(function( [field, value] ){
-            if (typeof value === "string"){
-                document.querySelector( "#" + field ).value = value;
+        function setPlacholder( el ){
+            if( !el.id ){
                 return;
             }
-            document.querySelectorAll( "." + field ).forEach(function( el, i ){
-                el.value = value[i];
-            });
-        });
-    }
-
-    function setPlacholder( el ){
-        if( !el.id ){
-            return;
+            placholderText = el.id[0].toUpperCase() + el.id.slice(1);
+            el.placeholder = placholderText;
         }
-        placholderText = el.id[0].toUpperCase() + el.id.slice(1);
-        el.placeholder = placholderText;
-    }
 
-    window.onload = function(){
-        document.querySelector("#switcher").onchange = loadCharacter
-        loadCharacter();
+        window.onload = function(){
+            document.querySelector("#switcher").onchange = loadCharacter
+            loadCharacter();
 
-        document.querySelectorAll( "input" ).forEach( setPlacholder );
-        document.querySelectorAll( "textarea" ).forEach( setPlacholder );
-    }
+            document.querySelectorAll( "input" ).forEach( setPlacholder );
+            document.querySelectorAll( "textarea" ).forEach( setPlacholder );
+        }
 
-</script>
+    </script>
 </html>
