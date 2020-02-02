@@ -18,6 +18,8 @@
             body {
                 background: url("fae.png") no-repeat;
                 min-height: 1100px;
+                font-family: 'Arial Black', Gadget, sans-serif;
+                font-size: 1em;
             }
             #switcher {
                 position: absolute;
@@ -74,6 +76,16 @@
                 width: 325px;
                 font-size: 22px;
             }
+            #solar-system {
+                top: 0;
+                left: 0;
+                position: absolute;
+                width: 100%;
+                min-height: 100%;
+                background-color: white;
+                margin: 20px;
+                display: none;
+            }
         </style>
 
     </head>
@@ -82,6 +94,7 @@
             <option value="a">Atte</option>
             <option value="e">Eero</option>
             <option value="j">Johannes</option>
+            <option value="s">System</option>
         </select>
 
         <input type="text" id="name" />
@@ -110,6 +123,59 @@
         <input type="text" class="consequence" style="top: calc(var(--bottom-section) + var(--aspect-spacing) * 0)" />
         <input type="text" class="consequence" style="top: calc(var(--bottom-section) + var(--aspect-spacing) * 1)" />
         <input type="text" class="consequence" style="top: calc(var(--bottom-section) + var(--aspect-spacing) * 2)" />
+
+        <div id="solar-system">
+            <h1>Pyramus</h1>
+            <ul>
+                <li>Teknologia +2 &mdash; kyky valonnopeuteen</li>
+                <li>Luonto -3 &mdash; karu maailma: ei ilmakehää, mutta on painovoima</li>
+                <li>Resurssit +1 &mdash; rikas</li>
+            </ul>
+            <h2>Aspektit</h2>
+            <ul>
+                <li>Tietoisen planeetan kultti</li>
+                <li>Syvän ytimen louhostoiminta</li>
+            </ul>
+            <h1>Bouras</h1>
+            <ul>
+                <li>Teknologia +3 &mdash; valonnopeuden täydellinen kontrolli</li>
+                <li>Luonto +2 &mdash; paratiisiplaneetta, jolla useita elämää tukevia kuita</li>
+                <li>Resurssit -1 &mdash; melkein itsenä ylläpitävä</li>
+            </ul>
+            <h2>Aspektit</h2>
+            <ul>
+                <li>Planeettojenväliset megakorporaatiot</li>
+                <li>Kuoleva telepaattinen yläluokka</li>
+            </ul>
+            <h1>Mihal</h1>
+            <ul>
+                <li>Teknologia -2 &mdash; varhaisteollistunut</li>
+                <li>Luonto -1 &mdash; selviytymiskelpoinen</li>
+                <li>Resurssit -1 &mdash; melkein itsensä ylläpitävä</li>
+            </ul>
+            <h2>Aspektit</h2>
+            <ul>
+                <li>Totalitaarinen dieselpunk</li>
+                <li>Työkloonit</li>
+            </ul>
+            <h1>Kalika</h1>
+            <ul>
+                <li>Teknologia 0 &mdash; muuhun aurinkokuntaan ulottava</li>
+                <li>Luonto 0 &mdash; yksi paratiisimanner, muita karuja mantereita</li>
+                <li>Resurssit -2 &mdash; kaipaa tuontia</li>
+            </ul>
+            <h2>Aspektit</h2>
+            <ul>
+                <li>Unohdettu sivilisaatio</li>
+                <li>Sukupolvialukset</li>
+            </ul>
+            <h1>Resursseja</h1>
+            <ul>
+                <li>https://tattoo.github.io/fae/fae.pdf</li>
+                <li>https://tattoo.github.io/fae/fate.pdf</li>
+            </ul>
+        </div>
+
     </body>
     <script>
         function loadCharacter(){
@@ -136,7 +202,7 @@
                 }
                 , "j": {
                       "name": "Loxias Loukas"
-                    , "description": "https://tattoo.github.io/fae/fae.pdf\nhttps://tattoo.github.io/fae/fate.pdf"
+                    , "description": ""
                     , "refresh": "3"
                     , "aspect": ["Kirkasotsainen tutkiva journalisti", "Työntää nokkansa vääriin paikkoihin", "Herättää välitöntä luottamusta", "", ""]
                     , "approach": ["+1", "+3", "+1", "0", "+2", "+2"]
@@ -145,7 +211,17 @@
                     , "consequence": ["", "", ""]
                 }
             }
-            , character = data[document.querySelector("#switcher").value];
+            , character = document.querySelector("#switcher").value;
+
+            if (character === "s"){
+                document.querySelector("#solar-system").style.display = "inherit";
+                return;
+            } else {
+                document.querySelector("#solar-system").style.display = "none";
+            }
+
+            character = data[character]
+
             if (character === undefined){
                 alert("Could not load character")
             }
